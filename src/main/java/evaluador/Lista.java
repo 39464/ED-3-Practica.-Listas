@@ -119,20 +119,35 @@ public class Lista {
 
 		// Devuelve una representación de la lista en forma de String.
 		public String toString() {
-			String resultado = "[";
+			StringBuilder resultado = new StringBuilder("[");
 			if (!this.vacia()) {
-				resultado +=inicio.getEv();
+				resultado.append(inicio.getEv());
 				Nodo actual = inicio.getSiguiente();
 				while (actual != null) {
-					resultado += "," + actual.getEv();
+					resultado.append(",").append(actual.getEv());
 					actual = actual.getSiguiente();
 				}
 			}
-			resultado += "]";
-			return resultado;
+			resultado.append("]");
+			return resultado.toString();
 		}
 
 	public int numConvocatorias(String nombreAsignatura) {
-		return 0; // Eliminar esta líne al codificar el método
+        Nodo actual = inicio;
+        int cont = 0;
+        if(numElementos == 0) {
+        	return 0;
+        }else{
+            while(actual != null) {
+                Evaluacion ev = actual.getEv();
+                if(ev.getNombreAsignatura().equals(nombreAsignatura)) {
+                    if(ev.getNota() != -1){
+                        cont++;
+                    }
+                }
+            	actual = actual.getSiguiente();
+            }
+        }
+        return cont;
 	}
 }
