@@ -32,6 +32,7 @@ public class Pruebas {
             a1.nuevaEvaluacion(lista1.getElemento(i));
         }
         Evaluacion ev5 = new Evaluacion("ED", "Junio 20", 3);
+        a1.nuevaEvaluacion(ev5);
         System.out.println("---ASIGNATURAS APROBADAS POR "+ a1.getNombre()+ "---");
         Lista aprobadas1 = a1.asignaturasAprobadas();
         if(!aprobadas1.vacia()){

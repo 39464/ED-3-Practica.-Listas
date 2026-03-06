@@ -35,15 +35,23 @@ public class Alumno {
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
         boolean resultado = false;
         Iterador it = this.expediente.getIterador();
-        while(it.hasNext()) {
-            Evaluacion prueba = it.next();
-            if(prueba.mismaEvaluacion(evaluacion)) {
-                if(prueba.getNota() == evaluacion.getNota()) {
+        Evaluacion prueba;
+        if(!it.hasNext()) {
+            this.expediente.insertar(evaluacion);
+            resultado= true;
+        } else {
+            while (it.hasNext()) {
+                prueba = it.next();
+                if (prueba.mismaEvaluacion(evaluacion)) {
+                    if (prueba.getNota() == evaluacion.getNota()) {
+                        resultado = true;
+                    } else {
+                        System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
+                    }
+                } else {
+                    this.expediente.insertar(prueba);
                     resultado = true;
-                }else{ System.out.println("Calificacion previamente insertada con nota: "+ prueba.getNota());}
-            }else{
-                this.expediente.insertar(prueba);
-                resultado = true;
+                }
             }
         }
         return resultado;
@@ -69,7 +77,6 @@ public class Alumno {
                 resultado.insertar(prueba);
             }
         }
-        if(resultado.getNumElementos() == 0) resultado = null;
         return resultado;
 	}
 

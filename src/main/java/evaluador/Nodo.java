@@ -1,5 +1,5 @@
 /**
- * @author Nombre y apellidos
+ * @author Irene Lombardo Cabrera
  * */
 package evaluador;
 
