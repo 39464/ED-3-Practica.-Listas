@@ -60,11 +60,12 @@ public class Alumno {
 	public boolean estaAprobado(String nombreAsig) {
 		Iterador it = this.expediente.getIterador();
         boolean resultado = false;
-        while(it.hasNext()) {
-            Evaluacion prueba = it.next();
-            if(prueba.getNombreAsignatura().equals(nombreAsig))
-                if(prueba.getNota() >= 5) resultado = true;
-        }
+            while (it.hasNext() && !resultado) {
+                Evaluacion prueba = it.next();
+                if (prueba != null && (prueba.getNombreAsignatura()).equals(nombreAsig)) {
+                    if(prueba.getNota() >= 5) return true;
+                }
+            }
         return resultado;
 	}
 
