@@ -12,10 +12,10 @@ public class Pruebas {
         Evaluacion ev2 = new Evaluacion("ED", "Julio 19", -1); //-1 == no presentado
         Evaluacion ev3 = new Evaluacion("ED", "Julio 20", 7.4);
         Evaluacion ev4 = new Evaluacion("Algebra", "Junio 18", 6.4);
-        Lista lista = new Lista();
-        lista.insertar(ev1); lista.insertar(ev2); lista.insertar(ev3); lista.insertar(ev4);
-        Iterador it = lista.getIterador();
-        if (lista.vacia()) {
+        Lista lista1 = new Lista();
+        lista1.insertar(ev1); lista1.insertar(ev2); lista1.insertar(ev3); lista1.insertar(ev4);
+        Iterador it = lista1.getIterador();
+        if (lista1.vacia()) {
             System.out.println("Lista vacia");
         } else {
             while(it.hasNext()) {
@@ -23,9 +23,33 @@ public class Pruebas {
             }
         }
 
-        System.out.println("Convocatorias en ED: " + lista.numConvocatorias("ED"));
-        System.out.println("Convocatorias en Algebra: " + lista.numConvocatorias("Algebra"));
-        System.out.println("Convocatorias en Fundamentos de Programacion: " + lista.numConvocatorias("Fundamentos de Programacion"));
+        System.out.println("Convocatorias en ED: " + lista1.numConvocatorias("ED"));
+        System.out.println("Convocatorias en Algebra: " + lista1.numConvocatorias("Algebra"));
+        System.out.println("Convocatorias en Fundamentos de Programacion: " + lista1.numConvocatorias("Fundamentos de Programacion"));
+        Alumno a1 = new Alumno("Felipe Garcia Gomez", 1253);
+        Alumno a2 = new Alumno("Alicia Blazquez Martin", 5622);
+        for(int i=0; i < lista1.getNumElementos(); i++){
+            a1.nuevaEvaluacion(lista1.getElemento(i));
+        }
+        Evaluacion ev5 = new Evaluacion("ED", "Junio 20", 3);
+        System.out.println("---ASIGNATURAS APROBADAS POR "+ a1.getNombre()+ "---");
+        Lista aprobadas1 = a1.asignaturasAprobadas();
+        if(!aprobadas1.vacia()){
+            for(int i = 0; i < aprobadas1.getNumElementos(); i++){
+                aprobadas1.getElemento(i).mostrar();
+            }
+        }
+        System.out.println();
+        System.out.println("---ASIGNATURAS APROBADAS POR "+ a2.getNombre()+ "---");
+        Lista aprobadas2 = a2.asignaturasAprobadas();
+        if(!aprobadas2.vacia()){
+            for(int i = 0; i < aprobadas1.getNumElementos(); i++){
+                aprobadas1.getElemento(i).mostrar();
+            }
+        }
+
+        a1.mostrar();
+        a2.mostrar();
     }
 }
     
