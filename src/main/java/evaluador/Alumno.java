@@ -33,28 +33,78 @@ public class Alumno {
 	}
 
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
-		return false; // Eliminar esta línea al codificar el método
+        boolean resultado = false;
+        Iterador it = this.expediente.getIterador();
+        while(it.hasNext()) {
+            Evaluacion prueba = it.next();
+            if(prueba.mismaEvaluacion(evaluacion)) {
+                if(prueba.getNota() == evaluacion.getNota()) {
+                    resultado = true;
+                }else{ System.out.println("Calificacion previamente insertada con nota: "+ prueba.getNota());}
+            }else{
+                this.expediente.insertar(prueba);
+                resultado = true;
+            }
+        }
+        return resultado;
 	}
 
 	public boolean estaAprobado(String nombreAsig) {
-		// Codificar
-		return false; // Eliminar esta línea al codificar el método
+		Iterador it = this.expediente.getIterador();
+        boolean resultado = false;
+        while(it.hasNext()) {
+            Evaluacion prueba = it.next();
+            if(prueba.getNombreAsignatura().equals(nombreAsig))
+                if(prueba.getNota() >= 5) resultado = true;
+        }
+        return resultado;
 	}
 
 	public Lista asignaturasAprobadas() {
-		return null;  // Eliminar esta línea al codificar el método
+		Lista resultado = new Lista();
+        Iterador it = this.expediente.getIterador();
+        while(it.hasNext()) {
+            Evaluacion prueba = it.next();
+            if(estaAprobado(prueba.getNombreAsignatura())) {
+                resultado.insertar(prueba);
+            }
+        }
+        if(resultado.getNumElementos() == 0) resultado = null;
+        return resultado;
 	}
 
 	public double mediaAprobadas() {
-		return 0.0;  // Eliminar esta línea al codificar el método
+		Lista aprobadas = asignaturasAprobadas();
+        double suma = 0.0;
+        int cont = 0;
+        double media;
+        Iterador it = aprobadas.getIterador();
+        if(aprobadas.getNumElementos() == 0) { media = 0.0; }
+        else{
+            while(it.hasNext()) {
+                Evaluacion prueba = it.next();
+                suma += prueba.getNota();
+                cont++;
+            }
+            media = suma/cont;
+        }
+        return media;
 	}
 
-	public int getNumAprobadas() {
-		return 0;  // Eliminar esta línea al codificar el método
-	}
+	public int getNumAprobadas() { return asignaturasAprobadas().getNumElementos();	}
 
 	public void mostrar() {
-
+        Iterador it = this.expediente.getIterador();
+        System.out.println(nombre + ". Matricula: " + matricula);
+        if(this.expediente.getNumElementos()== 0){
+            System.out.println("No se ha realizado ninguna evaluación");
+        }else{
+            while(it.hasNext()) {
+                it.next().mostrar();
+            }
+            System.out.println(this.expediente.getNumElementos() + " evaluaciones y "+getNumAprobadas()+
+                    " asignaturas aprobadas con calificación media "+mediaAprobadas());
+        }
 	}
 
 }
