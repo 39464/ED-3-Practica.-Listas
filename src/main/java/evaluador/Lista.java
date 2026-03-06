@@ -8,21 +8,21 @@ public class Lista {
 		private Nodo inicio, fin;
 		private int numElementos;
 
-		// Inicializa una lista vac�a (sin elementos)
+		// Inicializa una lista vacia (sin elementos)
 		public Lista() {
 			inicio = null;
 			fin = null;
 			numElementos = 0;
 		}
 
-		// Determina si la lista est� vac�a o no (sin elementos)
+		// Determina si la lista esta vacia o no (sin elementos)
 		public boolean vacia() {
 			return inicio == null;
 		}
 
-		// A�ade un nuevo dato al final de la lista
-		public void insertar(int dato) {
-			Nodo nuevo = new Nodo(dato, null);  // Crear un nodo nuevo
+		// Añade una nueva ev al final de la lista
+		public void insertar(Evaluacion ev) {
+			Nodo nuevo = new Nodo(ev, null);  // Crear un nodo nuevo
 			if (inicio == null) {  // Insertar el nodo al final de la lista enlazada
 				inicio = nuevo;
 			} else {
@@ -33,24 +33,24 @@ public class Lista {
 		}
 
 
-		// Devuelve el elemento que ocupa una posicion dada.
-		// Si no existe la posici�n, devuelve -1
-		public int getElemento(int posicion) {
+		// Devuelve la evaluacion que ocupa una posicion dada.
+		// Si no existe la posicion, devuelve null
+		public Evaluacion getElemento(int posicion) {
 			if (posicion < 0 || posicion >= numElementos) {
-				return -1;
+				return null;
 			} else {
 				// Avanzar en la lista enlazada tantos nodos como indique posicion
 				Nodo actual = inicio;
 				for (int i = 0; i < posicion; i++) {
 					actual = actual.getSiguiente();
 				}
-				return actual.getDato();
+				return actual.getEv();
 			}
 		}
 
-		// Almacena elemento en la posicion indicada por posicion
-		// Si la posici�n es incorrecta, devuelve false
-		public boolean setElemento(int dato, int posicion) {
+		// Almacena ev en la posicion indicada por posicion
+		// Si la posicion es incorrecta, devuelve false
+		public boolean setElemento(Evaluacion ev, int posicion) {
 			if (posicion < 0 || posicion >= numElementos) {
 				return false;
 			} else {
@@ -58,26 +58,26 @@ public class Lista {
 				for (int i = 0; i < posicion; i++) {
 					actual = actual.getSiguiente();
 				}
-				actual.setDato(dato);
+				actual.setEv(ev);
 				return true;
 			}
 		}
 
-		// Borra la primera ocurrencia del parámetro dato (si existe)
-		public boolean borrar(int dato) {
+		// Borra la primera ocurrencia del parámetro ev (si existe)
+		public boolean borrar(Evaluacion ev) {
 			Nodo actual = inicio;
 			Nodo anterior = null;
-			while (actual != null && actual.getDato() != dato) {
+			while (actual != null && actual.getEv() != ev) {
 				anterior = actual;
 				actual = actual.getSiguiente();
 			}
-			if (actual != null) {  // dato encontrado.
+			if (actual != null) {  // ev encontrada.
 				if (actual == inicio) {   // Borrar el primero de la lista
 					inicio = actual.getSiguiente();
 				} else {  // Borrar nodo que no es el primero
 					anterior.setSiguiente(actual.getSiguiente());
 				}
-				if (actual == fin) {  // Se ha borrado el �ltimo de la lista
+				if (actual == fin) {  // Se ha borrado el ultimo de la lista
 					fin = anterior;
 				}
 				numElementos--;
@@ -87,24 +87,24 @@ public class Lista {
 			}
 		}
 
-		// Devuelve la primera posición en la que se encuentra el parámetro dato (si existe)
-		public int posicion(int dato) {
+		// Devuelve la primera posición en la que se encuentra el parámetro ev (si existe)
+		public int posicion(Evaluacion ev) {
 			Nodo actual = inicio;
 			int posicion = 0;
-			while (actual != null && actual.getDato() != dato) {
+			while (actual != null && actual.getEv() != ev) {
 				actual = actual.getSiguiente();
 				posicion++;
 			}
-			if (actual != null) {  // Dato encontrado
+			if (actual != null) {  // Evaluacion encontrada
 				return posicion;
 			} else {
 				return -1;
 			}
 		}
 
-		// Determina si el parámetro dato existe en la lista.
-		public boolean contiene(int dato) {
-			return this.posicion(dato) >= 0;
+		// Determina si el parámetro ev existe en la lista.
+		public boolean contiene(Evaluacion ev) {
+			return this.posicion(ev) >= 0;
 		}
 
 		// Devuelve el número de elementos que tiene la lista
@@ -121,10 +121,10 @@ public class Lista {
 		public String toString() {
 			String resultado = "[";
 			if (!this.vacia()) {
-				resultado +=inicio.getDato();
+				resultado +=inicio.getEv();
 				Nodo actual = inicio.getSiguiente();
 				while (actual != null) {
-					resultado += "," + actual.getDato();
+					resultado += "," + actual.getEv();
 					actual = actual.getSiguiente();
 				}
 			}

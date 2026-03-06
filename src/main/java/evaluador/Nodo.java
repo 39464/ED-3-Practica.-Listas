@@ -5,11 +5,11 @@ package evaluador;
 
 public class Nodo {
 
-	private int dato;
+	private Evaluacion ev;
 	private Nodo siguiente;
 
-	public Nodo(int dato, Nodo siguiente) {
-		this.dato = dato;
+	public Nodo(Evaluacion ev, Nodo siguiente) {
+		this.ev = ev;
 		this.siguiente = siguiente;
 	}
 
@@ -21,11 +21,11 @@ public class Nodo {
 		this.siguiente = siguiente;
 	}
 
-	public int getDato() {
-		return dato;
+	public Evaluacion getEv() {
+		return ev;
 	}
 
-	public void setDato(int dato) {
-		this.dato = dato;
+	public void setEv(Evaluacion ev) {
+		this.ev = ev;
 	}
 }
