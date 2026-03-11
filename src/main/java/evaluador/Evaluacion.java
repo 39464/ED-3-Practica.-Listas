@@ -1,5 +1,5 @@
 /**
- * @author Nombre y apellidos
+ * @author Irene Lombardo Cabrera
  * */
 
 package evaluador;
@@ -35,6 +35,7 @@ public class Evaluacion {
 			System.out.println("    " + nombreAsignatura + " (" + convocatoria + "): NP");
 		}
 	}
+
 	public boolean mismaEvaluacion(Evaluacion ev){
 		return (
 				this.convocatoria.equals(ev.convocatoria)

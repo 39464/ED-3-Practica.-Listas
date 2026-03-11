@@ -1,5 +1,5 @@
 /**
- * @author Nombre y apellidos
+ * @author Irene Lombardo Cabrera
  * */
 
 package evaluador;
@@ -35,7 +35,7 @@ public class Alumno {
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
         boolean resultado = false;
         Iterador it = this.expediente.getIterador();
-        Evaluacion prueba;
+        Evaluacion prueba; //actua sobre this.expediente
         if(!it.hasNext()) {
             this.expediente.insertar(evaluacion);
             resultado= true;
@@ -49,7 +49,7 @@ public class Alumno {
                         System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
                     }
                 } else {
-                    this.expediente.insertar(prueba);
+                    this.expediente.insertar(evaluacion);
                     resultado = true;
                 }
             }
@@ -58,14 +58,15 @@ public class Alumno {
 	}
 
 	public boolean estaAprobado(String nombreAsig) {
-		Iterador it = this.expediente.getIterador();
+		Iterador it = expediente.getIterador();
         boolean resultado = false;
-            while (it.hasNext() && !resultado) {
-                Evaluacion prueba = it.next();
-                if (prueba != null && (prueba.getNombreAsignatura()).equals(nombreAsig)) {
-                    if(prueba.getNota() >= 5) return true;
-                }
+        Evaluacion prueba;
+        while (it.hasNext()) {
+            prueba = it.next();
+            if ((prueba.getNombreAsignatura()).equals(nombreAsig)) {
+                if(prueba.getNota() >= 5) return true;
             }
+        }
         return resultado;
 	}
 
