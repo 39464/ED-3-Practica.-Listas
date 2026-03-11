@@ -34,49 +34,58 @@ public class Alumno {
 
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
         boolean resultado = false;
-        Iterador it = this.expediente.getIterador();
-        Evaluacion prueba; //actua sobre this.expediente
-        if(!it.hasNext()) {
-            this.expediente.insertar(evaluacion);
-            resultado= true;
-        } else {
+        if (evaluacion != null) {
+            Iterador it = this.expediente.getIterador();
+            Evaluacion prueba; //actua sobre this.expediente
+            if (!it.hasNext()) {
+                this.expediente.insertar(evaluacion);
+                resultado = true;
+            } else {
+                while (it.hasNext() && !resultado) {
+                    prueba = it.next();
+                    if (prueba.mismaEvaluacion(evaluacion)) {
+                        if (prueba.getNota() == evaluacion.getNota()) {
+                            resultado = true;
+                        } else {
+                            System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
+                        }
+                    } else {
+                        this.expediente.insertar(evaluacion);
+                        resultado = true;
+                    }
+                }
+            }
+        }
+        return resultado;
+    }
+
+	public boolean estaAprobado(String nombreAsig) {
+		Iterador it = expediente.getIterador();
+        boolean resultado = false;
+        if(!nombreAsig.isEmpty()) {
+            Evaluacion prueba;
             while (it.hasNext()) {
                 prueba = it.next();
-                if (prueba.mismaEvaluacion(evaluacion)) {
-                    if (prueba.getNota() == evaluacion.getNota()) {
-                        resultado = true;
-                    } else {
-                        System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
-                    }
-                } else {
-                    this.expediente.insertar(evaluacion);
+                if ((prueba.getNombreAsignatura()).equals(nombreAsig) && prueba.getNota() >= 5) {
                     resultado = true;
                 }
             }
         }
         return resultado;
-	}
-
-	public boolean estaAprobado(String nombreAsig) {
-		Iterador it = expediente.getIterador();
-        boolean resultado = false;
-        Evaluacion prueba;
-        while (it.hasNext()) {
-            prueba = it.next();
-            if ((prueba.getNombreAsignatura()).equals(nombreAsig)) {
-                if(prueba.getNota() >= 5) return true;
-            }
-        }
-        return resultado;
-	}
+	} //busca en toda la lista todas las posibilidades
 
 	public Lista asignaturasAprobadas() {
 		Lista resultado = new Lista();
         Iterador it = this.expediente.getIterador();
-        while(it.hasNext()) {
-            Evaluacion prueba = it.next();
-            if(estaAprobado(prueba.getNombreAsignatura())) {
-                resultado.insertar(prueba);
+        if(this.expediente!= null){
+            Evaluacion prueba;
+            while(it.hasNext()) {
+                prueba = it.next();
+                if(this.estaAprobado(prueba.getNombreAsignatura())) {
+                    if(prueba.getNota() >= 5 && !resultado.contiene(prueba)) {
+                        resultado.insertar(prueba);
+                    }
+                }
             }
         }
         return resultado;
@@ -84,12 +93,12 @@ public class Alumno {
 
 	public double mediaAprobadas() {
 		Lista aprobadas = asignaturasAprobadas();
-        double suma = 0.0;
-        int cont = 0;
-        double media;
         Iterador it = aprobadas.getIterador();
+        double media;
         if(aprobadas.getNumElementos() == 0) { media = 0.0; }
         else{
+            double suma = 0.0;
+            int cont = 0;
             while(it.hasNext()) {
                 Evaluacion prueba = it.next();
                 suma += prueba.getNota();
@@ -103,19 +112,20 @@ public class Alumno {
 	public int getNumAprobadas() { return asignaturasAprobadas().getNumElementos();	}
 
 	public void mostrar() {
-        Iterador it = this.expediente.getIterador();
         System.out.println(nombre + ". Matricula: " + matricula);
-        if(this.expediente.getNumElementos()== 0){
+        if (this.expediente.getNumElementos() == 0) {
             System.out.println("No se ha realizado ninguna evaluación");
-        }else{
-            while(it.hasNext()) {
-                it.next().mostrar();
+        } else {
+            Iterador it = this.expediente.getIterador();
+            Evaluacion prueba;
+            while (it.hasNext()) {
+                prueba = it.next();
+                prueba.mostrar();
             }
-            System.out.println(this.expediente.getNumElementos() + " evaluaciones y "+getNumAprobadas()+
-                    " asignaturas aprobadas con calificación media "+mediaAprobadas());
+            System.out.println(this.expediente.getNumElementos() + " evaluaciones y " + getNumAprobadas() +
+                    " asignaturas aprobadas con calificación media " + mediaAprobadas());
         }
 	}
-
 }
 
 
