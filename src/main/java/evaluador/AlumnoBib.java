@@ -4,16 +4,19 @@
 
 package evaluador;
 
-public class Alumno {
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class AlumnoBib {
 
 	private String nombre;
 	private int matricula;
-	private Lista expediente;
+	private LinkedList<Evaluacion> expediente;
 
-	public Alumno(String nombre, int matricula) {
+	public AlumnoBib(String nombre, int matricula) {
 		this.nombre = nombre;
 		this.matricula = matricula;
-		expediente = new Lista();
+		expediente = new LinkedList<>();
 	}
 
 	public int getMatricula() {
@@ -35,10 +38,10 @@ public class Alumno {
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
         boolean resultado = false;
         if (evaluacion != null) {
-            Iterador it = this.expediente.getIterador();
-            Evaluacion prueba; //actua sobre this.expediente
+            Iterator<Evaluacion> it = this.expediente.descendingIterator();
+            Evaluacion prueba;
             if (!it.hasNext()) {
-                this.expediente.insertar(evaluacion);
+                this.expediente.addFirst(evaluacion);
                 resultado = true;
             } else {
                 while (it.hasNext() && !resultado) {
@@ -50,7 +53,7 @@ public class Alumno {
                             System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
                         }
                     } else {
-                        this.expediente.insertar(evaluacion);
+                        this.expediente.add(evaluacion);
                         resultado = true;
                     }
                 }
@@ -60,30 +63,30 @@ public class Alumno {
     }
 
 	public boolean estaAprobado(String nombreAsig) {
-        boolean resultado = false;
+        boolean resul = false;
         if(!nombreAsig.isEmpty()) {
-            Iterador it = expediente.getIterador();
+            Iterator<Evaluacion> it = this.expediente.descendingIterator();
             Evaluacion prueba;
             while (it.hasNext()) {
                 prueba = it.next();
                 if ((prueba.getNombreAsignatura()).equals(nombreAsig) && prueba.getNota() >= 5) {
-                    resultado = true;
+                    resul = true;
                 }
             }
         }
-        return resultado;
+        return resul;
 	} //busca en toda la lista todas las posibilidades
 
-	public Lista asignaturasAprobadas() {
-        Lista resultado = new Lista();
-        if(this.expediente!= null){
-            Iterador it = this.expediente.getIterador();
+	public LinkedList<Evaluacion> asignaturasAprobadas() {
+		LinkedList<Evaluacion> resultado = new LinkedList<>();
+        if(!this.expediente.isEmpty()) {
+            Iterator<Evaluacion> it = this.expediente.descendingIterator();
             Evaluacion prueba;
             while(it.hasNext()) {
                 prueba = it.next();
                 if(this.estaAprobado(prueba.getNombreAsignatura())) {
-                    if(prueba.getNota() >= 5 && !resultado.contiene(prueba)) {
-                        resultado.insertar(prueba);
+                    if(prueba.getNota() >= 5 && !resultado.contains(prueba)) {
+                        resultado.add(prueba);
                     }
                 }
             }
@@ -92,10 +95,10 @@ public class Alumno {
 	}
 
 	public double mediaAprobadas() {
-		Lista aprobadas = asignaturasAprobadas();
+		LinkedList<Evaluacion> aprobadas = asignaturasAprobadas();
         double media=0.0;
-        if(!aprobadas.vacia()) {
-            Iterador it = aprobadas.getIterador();
+        if(!aprobadas.isEmpty()) {
+            Iterator<Evaluacion> it = this.expediente.descendingIterator();
             double suma = 0.0;
             int cont = 0;
             while (it.hasNext()) {
@@ -108,20 +111,20 @@ public class Alumno {
         return media;
 	}
 
-	public int getNumAprobadas() { return asignaturasAprobadas().getNumElementos();	}
+	public int getNumAprobadas() { return asignaturasAprobadas().size();	}
 
 	public void mostrar() {
         System.out.println(nombre + ". Matricula: " + matricula);
-        if (this.expediente.getNumElementos() == 0) {
+        if (this.expediente.isEmpty()) {
             System.out.println("No se ha realizado ninguna evaluación");
         } else {
-            Iterador it = this.expediente.getIterador();
+            Iterator<Evaluacion> it = this.expediente.descendingIterator();
             Evaluacion prueba;
             while (it.hasNext()) {
                 prueba = it.next();
                 prueba.mostrar();
             }
-            System.out.println(this.expediente.getNumElementos() + " evaluaciones y " + getNumAprobadas() +
+            System.out.println(this.expediente.size() + " evaluaciones y " + getNumAprobadas() +
                     " asignaturas aprobadas con calificación media " + mediaAprobadas());
         }
 	}

@@ -7,7 +7,7 @@ package evaluador;
 public class Pruebas {
 
     public static void main(String[] args) {
-        System.out.println("------------ EVALUACIONES EN LA LISTA ------------");
+        System.out.println("---------- EVALUACIONES EN LA LISTA ----------");
         Evaluacion ev1 = new Evaluacion("ED", "Junio 19", 4.5);
         Evaluacion ev2 = new Evaluacion("ED", "Julio 19", -1); //-1 == no presentado
         Evaluacion ev3 = new Evaluacion("ED", "Julio 20", 7.4);
@@ -29,14 +29,17 @@ public class Pruebas {
         Evaluacion ev5 = new Evaluacion("ED", "Junio 20", 3);
         a1.nuevaEvaluacion(ev5);
 
-        System.out.println("---ASIGNATURAS APROBADAS POR "+ a1.getNombre()+ "---");
+        System.out.println("----------ASIGNATURAS APROBADAS POR "+ a1.getNombre()+ "----------");
         if(!mostrar(a1.asignaturasAprobadas())) System.out.println("Ninguna asignatura aprobada");
         System.out.println();
-        System.out.println("---ASIGNATURAS APROBADAS POR "+ a2.getNombre()+ "---");
+        System.out.println("-----------ASIGNATURAS APROBADAS POR "+ a2.getNombre()+ "-----------");
         if(!mostrar(a2.asignaturasAprobadas())) System.out.println("Ninguna asignatura aprobada");
 
         a1.mostrar();
         a2.mostrar();
+
+        //añadir alumnos biblioteca
+
     }
 
     public static boolean mostrar(Lista lista){ //TODO PREGUNTAR SI PUEDO HACER ESTO
