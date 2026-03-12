@@ -34,27 +34,26 @@ public class Alumno {
 
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
         boolean resultado = false;
+        boolean insertar = true;
         if (evaluacion != null) {
             Iterador it = this.expediente.getIterador();
             Evaluacion prueba; //actua sobre this.expediente
             if (!it.hasNext()) {
-                this.expediente.insertar(evaluacion);
                 resultado = true;
             } else {
-                while (it.hasNext() && !resultado) {
+                while (it.hasNext()) {
                     prueba = it.next();
                     if (prueba.mismaEvaluacion(evaluacion)) {
                         if (prueba.getNota() == evaluacion.getNota()) {
-                            resultado = true;
+                            resultado = true; insertar = false;
                         } else {
                             System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
+                            resultado = false; insertar=false;
                         }
-                    } else {
-                        this.expediente.insertar(evaluacion);
-                        resultado = true;
                     }
                 }
             }
+            if (insertar) { this.expediente.insertar(evaluacion); resultado = true; }
         }
         return resultado;
     }
@@ -113,7 +112,7 @@ public class Alumno {
 	public void mostrar() {
         System.out.println(nombre + ". Matricula: " + matricula);
         if (this.expediente.getNumElementos() == 0) {
-            System.out.println("No se ha realizado ninguna evaluación");
+            System.out.println("No ha realizado ninguna evaluación");
         } else {
             Iterador it = this.expediente.getIterador();
             Evaluacion prueba;

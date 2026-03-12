@@ -37,27 +37,26 @@ public class AlumnoBib {
 
 	public boolean nuevaEvaluacion(Evaluacion evaluacion) {
         boolean resultado = false;
+        boolean insertar = true;
         if (evaluacion != null) {
             Iterator<Evaluacion> it = this.expediente.descendingIterator();
             Evaluacion prueba;
             if (!it.hasNext()) {
-                this.expediente.addFirst(evaluacion);
                 resultado = true;
             } else {
-                while (it.hasNext() && !resultado) {
+                while (it.hasNext()) {
                     prueba = it.next();
                     if (prueba.mismaEvaluacion(evaluacion)) {
                         if (prueba.getNota() == evaluacion.getNota()) {
-                            resultado = true;
+                            resultado = true; insertar = false;
                         } else {
                             System.out.println("Calificacion previamente insertada con nota: " + prueba.getNota());
+                            resultado = false; insertar = false;
                         }
-                    } else {
-                        this.expediente.add(evaluacion);
-                        resultado = true;
                     }
                 }
             }
+            if (insertar) { this.expediente.addLast(evaluacion); resultado = true; }
         }
         return resultado;
     }
