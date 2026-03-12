@@ -40,6 +40,7 @@ public class Pruebas {
         System.out.println("---------------------------------");
         a2.mostrar();
         System.out.println("---------------------------------");
+        System.out.println();
 
         //añadir alumnos biblioteca
 
@@ -49,8 +50,9 @@ public class Pruebas {
             a3.nuevaEvaluacion(lista1.getElemento(i));
         }
 
-        System.out.println("----------- MOSTRAR LOS ALUMNOS BIBLIOTECA ------------");
+        System.out.println("----------- MOSTRAR LOS ALUMNOS BIBLIOTECA -----------");
         a3.mostrar();
+        a3.mediaAprobadas();
         System.out.println("---------------------------------");
         a4.mostrar();
         System.out.println("---------------------------------");

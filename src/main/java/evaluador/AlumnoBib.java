@@ -39,7 +39,7 @@ public class AlumnoBib {
         boolean resultado = false;
         boolean insertar = true;
         if (evaluacion != null) {
-            Iterator<Evaluacion> it = this.expediente.descendingIterator();
+            Iterator<Evaluacion> it = this.expediente.iterator();
             Evaluacion prueba;
             if (!it.hasNext()) {
                 resultado = true;
@@ -64,7 +64,7 @@ public class AlumnoBib {
 	public boolean estaAprobado(String nombreAsig) {
         boolean resul = false;
         if(!nombreAsig.isEmpty()) {
-            Iterator<Evaluacion> it = this.expediente.descendingIterator();
+            Iterator<Evaluacion> it = this.expediente.iterator();
             Evaluacion prueba;
             while (it.hasNext()) {
                 prueba = it.next();
@@ -79,13 +79,13 @@ public class AlumnoBib {
 	public LinkedList<Evaluacion> asignaturasAprobadas() {
 		LinkedList<Evaluacion> resultado = new LinkedList<>();
         if(!this.expediente.isEmpty()) {
-            Iterator<Evaluacion> it = this.expediente.descendingIterator();
+            Iterator<Evaluacion> it = this.expediente.iterator();
             Evaluacion prueba;
             while(it.hasNext()) {
                 prueba = it.next();
                 if(this.estaAprobado(prueba.getNombreAsignatura())) {
                     if(prueba.getNota() >= 5 && !resultado.contains(prueba)) {
-                        resultado.add(prueba);
+                        resultado.addLast(prueba);
                     }
                 }
             }
@@ -95,9 +95,9 @@ public class AlumnoBib {
 
 	public double mediaAprobadas() {
 		LinkedList<Evaluacion> aprobadas = asignaturasAprobadas();
-        double media=0.0;
+        double media= 0.0;
         if(!aprobadas.isEmpty()) {
-            Iterator<Evaluacion> it = this.expediente.descendingIterator();
+            Iterator<Evaluacion> it = aprobadas.iterator();
             double suma = 0.0;
             int cont = 0;
             while (it.hasNext()) {
@@ -115,9 +115,9 @@ public class AlumnoBib {
 	public void mostrar() {
         System.out.println(nombre + ". Matricula: " + matricula);
         if (this.expediente.isEmpty()) {
-            System.out.println("No se ha realizado ninguna evaluación");
+            System.out.println("No ha realizado ninguna evaluación");
         } else {
-            Iterator<Evaluacion> it = this.expediente.descendingIterator();
+            Iterator<Evaluacion> it = this.expediente.iterator();
             Evaluacion prueba;
             while (it.hasNext()) {
                 prueba = it.next();
